@@ -1,0 +1,29 @@
+Below are the SQL queries to address:
+
+2. Visualization tools need the below KPIs to show to business stakeholders.
+- How many users are there?
+- every user has made how many requests.
+- Display total number of successful request
+
+Number of Users:
+
+SELECT COUNT(DISTINCT user_id) AS num_users
+FROM user_requests;
+
+This query calculates the count of distinct user_ids from the user_requests table, giving the total number of users.
+
+Number of Requests per User:
+
+SELECT user_id, COUNT(request_id) AS num_requests
+FROM user_requests
+GROUP BY user_id;
+
+This query groups the records in the user_requests table by user_id and counts the number of requests made by each user.
+
+Total Number of Successful Requests:
+
+SELECT COUNT(*) AS total_successful_requests
+FROM user_requests
+WHERE status = 'success';
+
+This query filters the records from the user_requests table where the status is 'success' and counts the total number of such successful requests.

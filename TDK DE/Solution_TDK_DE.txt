@@ -1,0 +1,39 @@
+In order to accomplish the business goals mentioned in the case study, we will use AWS services to construct an end-to-end pipeline. We can complete the tasks as follows:
+
+Data Ingestion and Processing:
+	AWS Glue: Set up AWS Glue for data ingestion and processing. Use Glue jobs to transform the raw data and load it into the Oracle DB.
+    Amazon S3: Store the raw data in an S3 bucket. Schedule a trigger for the Glue job to run daily at 23:30 CET to process the incoming data.
+
+Summary Table Updates:
+    AWS Lambda: Write Lambda functions to update the summary tables in the Oracle DB after the Glue job completes successfully. These functions will be triggered by the Glue job completion event.
+    CloudWatch Events: Create CloudWatch Events rules to trigger the Lambda functions upon successful completion of the Glue job.
+
+Visualization:
+    Amazon QuickSight: Use Amazon QuickSight as the visualization tool. Connect QuickSight to the Oracle DB to fetch data for visualization.
+    Scheduled Refresh: Configure QuickSight to refresh the visualization application daily at 03:00 AM CET to reflect the latest data.
+	
+Block diagram:
+
+  +---------------------------------------------+
+  |                Data Ingestion @ 23:30 CET   |
+  |                 (S3 Bucket)                 |
+  +---------------------------------------------+
+                           |
+                           V
+  +---------------------------------------------+
+  |                AWS Glue ETL Job             |
+  |       (Process and Load to Oracle DB)       |
+  +---------------------------------------------+
+                           |
+                           V
+  +---------------------------------------------+
+  |           Summary Table Updates             |
+  |          (AWS Lambda Function)              |
+  +---------------------------------------------+
+                           |
+                           V
+  +---------------------------------------------+
+  |       QuickSight Dashboard Creation         |
+  |(Amazon QuickSight with                      |
+  |  scheduled dataset refresh @ 3:00 AM CET)   |
+  +---------------------------------------------+
